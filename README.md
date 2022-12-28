@@ -6,7 +6,7 @@ eg$%789nwqhc roRYBH567GH^&($567uJKerhcgmo8q348y tcmq q o34ytho8qgo***
 # Overview
 
 A smarthome device that work on raspberry pi and other extentions, featuring many cool features such as cute anime girl dance for you 24/7, or configurable setting which 
-you can change this cute anime girl into any character you want (your waifu for example).
+you can change this cute anime girl to any character you want (your waifu for example).
 
 Trust me you won't regret it ( ͡° ͜ʖ ͡°)
 
