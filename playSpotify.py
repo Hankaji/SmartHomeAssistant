@@ -27,7 +27,7 @@ while True:
             print("Already playing!")
     elif command == "playing":
         playback = sp.current_playback()
-        print("Now playing ", "by ", playback['item']['artists'][0]['name'])
+        print("Now playing", playback['item']['name'], "-", playback['item']['artists'][0]['name'])
     elif command == "stop":
         try:
             res = sp.devices()
