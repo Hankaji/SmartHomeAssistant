@@ -1,0 +1,23 @@
+[
+    {
+        "inputType": "command",
+        "commandID": "translation",
+        "userInput": ["translate", "to", "into"],
+        "requiredKeyword": ["translate", ["to", "into"]],
+        "response": ["Ok"]
+    },
+    {
+        "inputType": "conversation",
+        "responseID": "greeting",
+        "userInput": ["hi", "hey", "hello", "sup"],
+        "requiredKeyword": [],
+        "response": ["Hello there", "Hi", "Nice to meet you!"]
+    },
+    {
+        "inputType": "conversation",
+        "responseID": "answering",
+        "userInput": ["favourite", "food"],
+        "requiredKeyword": [],
+        "response": ["My favourite food is bing chilling", "I really love eating bing chilling"]
+    }
+]
