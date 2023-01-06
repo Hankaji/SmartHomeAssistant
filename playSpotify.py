@@ -58,5 +58,16 @@ while True:
         sp.volume(res['devices'][0]['volume_percent'] + 10, res["devices"][0]["id"])
         res = sp.devices()
         print(res['devices'][0]['volume_percent'])
-        
+    elif command == "volume down":
+        res = sp.devices()
+        print(res['devices'][0]['volume_percent'])
+        sp.volume(res['devices'][0]['volume_percent'] - 10, res["devices"][0]["id"])
+        res = sp.devices()
+        print(res['devices'][0]['volume_percent'])
+    elif command == "search":
+        a = input("Song name: ")
+        res = sp.search(a, 1, 0,"track")
+        print(res['tracks']["items"][0]["external_urls"]["spotify"])
 
+    elif command == "s":
+        break
