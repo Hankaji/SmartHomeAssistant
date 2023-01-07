@@ -11,6 +11,8 @@ def main():
         try:
             # text = speech2text.listening(recognizer)
             user_input = input("Enter command: ")
+            if user_input == "q":
+                break
             checker.check_command(user_input)
             # print(checker.commands)
             
