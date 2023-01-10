@@ -73,6 +73,13 @@ while True:
     
     elif command == "search":
         a = input("Song name: ")
+        
+        specific = a.find(" as by ")
+
+        if specific > -1:
+            song_info = a.split(" as by ")
+            a = song_info[0] + " artist:" + song_info[1]
+
         dev = sp.devices()
         device = dev["devices"][0]["id"]
         res = sp.search(a, limit = "1")
