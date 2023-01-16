@@ -14,7 +14,6 @@ def active_device():
         devices = res["devices"]
         for i in devices:
             if i["is_active"] == True:
-                print(i["name"], i["id"])
                 return [i["name"], i["id"]] #[0] is name of device, [1] is id of device
     else: 
         return -1
@@ -36,13 +35,14 @@ while True:
     if device == -1:
         print("No currently active device")
         continue
-    
     else:
-        if command == "play":
+        dev_name = device[0]
+        dev_id = device[1]
+        if command == "resume":
             try:
-                print("Resuming playback on device:", device[0])
+                print("Resuming playback on device:", dev_name)
 
-                sp.start_playback(device[1])
+                sp.start_playback(dev_id)
             except:
                 print("Already playing!")
         
@@ -55,37 +55,33 @@ while True:
         
         elif command == "stop":
             try:
-                print("Stopping playback on device:", device[0])
+                print("Stopping playback on device:", dev_name)
 
-                sp.pause_playback(device[1])
+                sp.pause_playback(dev_id)
             except:
                 print("Nothing is playing!")
         
         elif command == "next":
-            print("Skipping to next song on device:", device[0])
+            print("Skipping to next song on device:", dev_name)
 
-            sp.next_track(device[1])
+            sp.next_track(dev_id)
         
         elif command == "previous":
-            print("Reverting to previous song on device:", device[0])
+            print("Reverting to previous song on device:", dev_name)
 
-            sp.previous_track(device[1])
+            sp.previous_track(dev_id)
         
         elif command == "volume up":
-            res = sp.devices()
             volume = res['devices'][0]['volume_percent']
-            sp.volume(volume + 10, res["devices"][0]["id"])
-            res = sp.devices()
+            sp.volume(volume + 10, dev_id)
             print("Increased volume to", (volume + 10))
         
         elif command == "volume down":
-            res = sp.devices()
             volume = res['devices'][0]['volume_percent']
-            sp.volume(volume - 10, res["devices"][0]["id"])
-            res = sp.devices()
+            sp.volume(volume - 10, dev_id)
             print("Decreased volume to", (volume - 10))
         
-        elif command == "search":
+        elif command == "play":
             a = input("Song name: ")
             if a == "cancel":
                 continue
@@ -98,9 +94,6 @@ while True:
             res = sp.search(a, limit = "1")
             song_res = res["tracks"]["items"][0]
 
-            # if song_res["is_playable"] != True:
-            #     print("Song is not playable!")
-            # else:
             result = {"artist": "", "song": "", "uri": ""}
             artist = ""
             if len(song_res["artists"]) > 1:
@@ -118,7 +111,34 @@ while True:
         elif command == "devices":
             res = sp.devices()
             print(res["devices"])
-        elif command == "view q":
-            pass
+
+        # elif command == "queue":
+        #     res = sp.queue()
+        #     print(res)
+        
         elif command == "add to q":
-            pass
+            a = input("Song name: ")
+            if a == "cancel":
+                continue
+            specific = a.find(" as by ")
+
+            if specific > -1:
+                song_info = a.split(" as by ")
+                a = song_info[0] + " artist:" + song_info[1]
+
+            res = sp.search(a, limit = "1")
+            song_res = res["tracks"]["items"][0]
+
+            result = {"artist": "", "song": "", "uri": ""}
+            artist = ""
+            if len(song_res["artists"]) > 1:
+                artist_list = ([x["name"] for x in song_res["artists"]])
+                artist = " and "
+                artist = artist.join(artist_list)
+            else:
+                artist = song_res["artists"][0]["name"]
+            result["uri"] = song_res["uri"]
+            result["song"] = song_res["name"]
+            result["artist"] = artist
+            print("Adding %s by %s to queue!"%(result["song"], result["artist"]))
+            sp.add_to_queue(uri = result["uri"], device_id= dev_id)
