@@ -29,81 +29,8 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cred.client_ID, client_
 
 while True:
     command = user_input()
-    
-<<<<<<< HEAD
+
     if command == "s":
-=======
-    elif command == "playing":
-        try:
-            playback = sp.current_playback()
-            print("Now playing", playback['item']['name'], "-", playback['item']['artists'][0]['name'])
-        except:
-            print("Nothing is playing!")
-    
-    elif command == "stop":
-        try:
-            res = sp.devices()
-
-            print("Stopping playback on device:",res["devices"][0]["name"])
-
-            sp.pause_playback(res["devices"][0]["id"])
-        except:
-            print("Nothing is playing!")
-    
-    elif command == "next":
-        res = sp.devices()
-
-        print("Skipping to next song on device:",res["devices"][0]["name"])
-
-        sp.next_track(res["devices"][0]["id"])
-    
-    elif command == "previous":
-        res = sp.devices()
-
-        print("Reverting to previous song on device:",res["devices"][0]["name"])
-
-        sp.previous_track(res["devices"][0]["id"])
-    
-    elif command == "volume up":
-        res = sp.devices()
-        volume = res['devices'][0]['volume_percent']
-        sp.volume(volume + 10, res["devices"][0]["id"])
-        res = sp.devices()
-        print("Increased volume to", (volume + 10))
-    
-    elif command == "volume down":
-        res = sp.devices()
-        volume = res['devices'][0]['volume_percent']
-        sp.volume(volume - 10, res["devices"][0]["id"])
-        res = sp.devices()
-        print("Decreased volume to", (volume - 10))
-    
-    elif command == "search":
-        a = input("Song name: ")
-        dev = sp.devices()
-        device = dev["devices"][0]["id"]
-        res = sp.search(a, limit = "1")
-        song_res = res["tracks"]["items"][0]
-
-        # if song_res["is_playable"] != True:
-        #     print("Song is not playable!")
-        # else:
-        result = {"artist": "", "song": "", "uri": ""}
-        artist = ""
-        if len(song_res["artists"]) > 1:
-            artist_list = ([x["name"] for x in song_res["artists"]])
-            artist = " and "
-            artist = artist.join(artist_list)
-        else:
-            artist = song_res["artists"][0]["name"]
-        result["uri"] = song_res["uri"]
-        result["song"] = song_res["name"]
-        result["artist"] = artist
-        print("Playing %s by %s!"%(result["song"], result["artist"]))
-        sp.start_playback(uris = [result["uri"]])
-
-    elif command == "s":
->>>>>>> parent of f077a67 (Search function refined)
         break
     device = active_device()
     if device == -1:
@@ -191,3 +118,7 @@ while True:
         elif command == "devices":
             res = sp.devices()
             print(res["devices"])
+        elif command == "view q":
+            pass
+        elif command == "add to q":
+            pass
