@@ -40,9 +40,9 @@ while True:
     else:
         if command == "play":
             try:
-                print("Resuming playback on device:", device[1])
+                print("Resuming playback on device:", device[0])
 
-                sp.start_playback(device[0])
+                sp.start_playback(device[1])
             except:
                 print("Already playing!")
         
@@ -55,21 +55,21 @@ while True:
         
         elif command == "stop":
             try:
-                print("Stopping playback on device:", device[1])
+                print("Stopping playback on device:", device[0])
 
-                sp.pause_playback(device[0])
+                sp.pause_playback(device[1])
             except:
                 print("Nothing is playing!")
         
         elif command == "next":
-            print("Skipping to next song on device:", device[1])
+            print("Skipping to next song on device:", device[0])
 
-            sp.next_track(device[0])
+            sp.next_track(device[1])
         
         elif command == "previous":
-            print("Reverting to previous song on device:", device[1])
+            print("Reverting to previous song on device:", device[0])
 
-            sp.previous_track(device[0])
+            sp.previous_track(device[1])
         
         elif command == "volume up":
             res = sp.devices()
