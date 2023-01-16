@@ -8,11 +8,11 @@ class Translator(MikuCommand):
     def __init__(self, commandID: str):
         super().__init__(commandID)
         
-    def execute(self, text: str):
-        text = text.lower()
-        text_list = text.split(' ')
+    def execute(self, text_list: list):
         translate_text_idx = text_list.index('translate')
-        to_text_idx = ((text_list[::-1].index("to") * (-1)) -1)
+        for word in ["to", "into"]:
+            if word in text_list:
+                to_text_idx = ((text_list[::-1].index(word) * (-1)) -1)
         sentecne = ' '.join(text_list[translate_text_idx + 1: to_text_idx])
         to_lang = text_list[to_text_idx + 1]
         return self.__gg_translate(sentecne, to_lang)

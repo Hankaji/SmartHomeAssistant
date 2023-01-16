@@ -2,9 +2,9 @@
     {
         "inputType": "command",
         "commandID": "translation",
-        "userInput": ["translate", "to", "into"],
+        "userInput": ["translate", ["to", "into"]],
         "requiredKeyword": ["translate", ["to", "into"]],
-        "response": ["Ok"]
+        "response": ["Ok,"]
     },
     {
         "inputType": "conversation",
@@ -16,8 +16,8 @@
     {
         "inputType": "conversation",
         "responseID": "answering",
-        "userInput": ["favourite", "food"],
-        "requiredKeyword": [],
+        "userInput": ["what", ["is", "are"], "your", "favourite", "food"],
+        "requiredKeyword": ["what", "favourite", "food"],
         "response": ["My favourite food is bing chilling", "I really love eating bing chilling"]
     }
 ]
