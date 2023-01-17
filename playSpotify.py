@@ -1,6 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import cred
+import bot_commands.cred as cred
 
 
 def user_input():
