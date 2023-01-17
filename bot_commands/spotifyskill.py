@@ -35,14 +35,43 @@ class SpotifyObject(MikuCommand):
                         return "but something is already playing right now."
                 case "stop":
                     try:
-                        print("Stop")
                         self.sp.pause_playback()
                         return "Stopping playback"
                     except spotipy.exceptions.SpotifyException:
                         return "but nothing is playing right now."
                 case "next":
-                    pass
+                    try:
+                        self.sp.next_track()
+                        return "Skipping to next track"
+                    except spotipy.exceptions.SpotifyException:
+                        return "but I cannot do this right now."
                 case "previous":
-                    pass
+                    try:
+                        self.sp.previous_track()
+                        return "Skipping to next track"
+                    except spotipy.exceptions.SpotifyException:
+                        return "but I cannot do this right now."
                 case "play":
-                    pass
+                    command = " ".join(text_list[2:])
+                    specific = command.find(" as by ")
+
+                    if specific > -1:
+                        song_info = a.split(" as by ")
+                        a = song_info[0] + " artist:" + song_info[1]
+
+                    res = self.sp.search(command, limit = "1")
+                    song_res = res["tracks"]["items"][0]
+
+                    result = {"artist": "", "song": "", "uri": ""}
+                    artist = ""
+                    if len(song_res["artists"]) > 1:
+                        artist_list = ([x["name"] for x in song_res["artists"]])
+                        artist = " and "
+                        artist = artist.join(artist_list)
+                    else:
+                        artist = song_res["artists"][0]["name"]
+                    result["uri"] = song_res["uri"]
+                    result["song"] = song_res["name"]
+                    result["artist"] = artist
+                    self.sp.start_playback(uris = [result["uri"]])
+                    return str("Playing %s by %s!"%(result["song"], result["artist"]))
