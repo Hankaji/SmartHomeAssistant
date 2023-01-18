@@ -60,26 +60,29 @@ class SpotifyObject(MikuCommand):
                     except spotipy.exceptions.SpotifyException:
                         return "but I cannot do this right now."
                 elif command == "play":
-                    command = " ".join(text_list[2:])
-                    specific = command.find(" as by ")
+                    try:
+                        command = " ".join(text_list[2:])
+                        specific = command.find(" as by ")
 
-                    if specific > -1:
-                        song_info = a.split(" as by ")
-                        a = song_info[0] + " artist:" + song_info[1]
+                        if specific > -1:
+                            song_info = command.split(" as by ")
+                            command = song_info[0] + " artist:" + song_info[1]
 
-                    res = self.sp.search(command, limit = "1")
-                    song_res = res["tracks"]["items"][0]
+                        res = self.sp.search(command, limit = "1")
+                        song_res = res["tracks"]["items"][0]
 
-                    result = {"artist": "", "song": "", "uri": ""}
-                    artist = ""
-                    if len(song_res["artists"]) > 1:
-                        artist_list = ([x["name"] for x in song_res["artists"]])
-                        artist = " and "
-                        artist = artist.join(artist_list)
-                    else:
-                        artist = song_res["artists"][0]["name"]
-                    result["uri"] = song_res["uri"]
-                    result["song"] = song_res["name"]
-                    result["artist"] = artist
-                    self.sp.start_playback(uris = [result["uri"]])
+                        result = {"artist": "", "song": "", "uri": ""}
+                        artist = ""
+                        if len(song_res["artists"]) > 1:
+                            artist_list = ([x["name"] for x in song_res["artists"]])
+                            artist = " and "
+                            artist = artist.join(artist_list)
+                        else:
+                            artist = song_res["artists"][0]["name"]
+                        result["uri"] = song_res["uri"]
+                        result["song"] = song_res["name"]
+                        result["artist"] = artist
+                        self.sp.start_playback(uris = [result["uri"]])
+                    except: 
+                        return " but I cannot do this right now"
                     return str("Playing %s by %s!"%(result["song"], result["artist"]))
