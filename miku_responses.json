@@ -14,6 +14,13 @@
         "response": ["Ok,"]
     },
     {
+        "inputType": "command",
+        "commandID": "ledControl",
+        "userInput": [["turn", "turns"], ["on", "off"], ["green", "yellow", "red"], "light"],
+        "requiredKeyword": [["turn", "turns"], ["on", "off"], ["green", "yellow", "red"], "light"],
+        "response": ["Ok,"]
+    },
+    {
         "inputType": "conversation",
         "responseID": "greeting",
         "userInput": ["hi", "hey", "hello", "sup"],
@@ -24,7 +31,7 @@
         "inputType": "conversation",
         "responseID": "answering",
         "userInput": ["what", ["is", "are"], "your", "favourite", "food"],
-        "requiredKeyword": ["what", "favourite", "food"],
+        "requiredKeyword": [["what", "what's"], "favourite", "food"],
         "response": ["My favourite food is bing chilling", "I really love eating bing chilling"]
     }
 ]
