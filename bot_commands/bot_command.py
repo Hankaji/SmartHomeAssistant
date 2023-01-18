@@ -6,5 +6,5 @@ class MikuCommand(ABC):
         self.commandID = commandID
 
     @abstractmethod
-    def execute(self, text_list: list):
+    def execute(self, text_list: list) -> str:
         pass

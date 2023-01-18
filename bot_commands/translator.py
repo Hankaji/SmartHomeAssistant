@@ -8,7 +8,7 @@ class Translator(MikuCommand):
     def __init__(self, commandID: str):
         super().__init__(commandID)
         
-    def execute(self, text_list: list):
+    def execute(self, text_list: list) -> str:
         translate_text_idx = text_list.index('translate')
         for word in ["to", "into"]:
             if word in text_list:
