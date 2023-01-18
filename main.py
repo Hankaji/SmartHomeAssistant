@@ -7,6 +7,7 @@ def main():
     recognizer = sr.Recognizer()
     checker = command_checker.CommandChecker("miku_responses.json")
     checker.add_command(translator.Translator("translation"))
+    checker.add_command(spotifyskill.SpotifyObject("spotify"))
     while True:
         try:
             # text = speech2text.listening(recognizer)

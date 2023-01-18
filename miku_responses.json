@@ -7,6 +7,13 @@
         "response": ["Ok,"]
     },
     {
+        "inputType": "command",
+        "commandID": "spotify",
+        "userInput": ["spotify", ["resume", "stop", "next", "previous", "play"]],
+        "requiredKeyword": ["spotify", ["resume", "stop", "next", "previous", "play"]],
+        "response": ["Ok,"]
+    },
+    {
         "inputType": "conversation",
         "responseID": "greeting",
         "userInput": ["hi", "hey", "hello", "sup"],
