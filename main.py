@@ -12,8 +12,8 @@ def main():
     checker.add_command(led_control.LEDControl("ledControl"))
     while True:
         try:
-            user_input = speech2text.listening(recognizer)
-            # user_input = input("Enter command: ")
+            # user_input = speech2text.listening(recognizer)
+            user_input = input("Enter command: ")
             if user_input == "stop":
                 break
             checker.check_command(user_input)

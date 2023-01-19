@@ -1,6 +1,8 @@
 import json
 import re
 import random
+import pyttsx3
+from subprocess import call
 from bot_commands.bot_command import MikuCommand
 
 class CommandChecker():
@@ -9,6 +11,12 @@ class CommandChecker():
         # initialization
         with open(response_json, "r") as f:
             self.responses = json.loads(f.read())
+        self.speech_engine = pyttsx3.init()
+        # self.zira_en_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
+        # self.haruka_jp_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_JA-JP_HARUKA_11.0"
+        # self.speech_engine.setProperty('rate', 124)
+        self.cmd_en_beg = r"./enspeech.sh"
+        self.cmd_ja_beg = r"./jaspeech.sh"
         self.commands = []
         self.command_IDs = []
     
@@ -77,7 +85,41 @@ class CommandChecker():
             # print(self.responses[response_idx])
             # print("detect command input type")
             bot_line = self.__find_command(self.responses[response_idx]["commandID"], text_list)
-        print(f"bot: {best_response} {bot_line}")
+        bot_response = f"{best_response} {bot_line}"
+        # print(self.speech_engine.getProperty('voices'))
+        print("bot: " + bot_response)
+        self.__text2speech(text_list, bot_response)
+        
+        
+    # language  : en_US, de_DE, ...
+    # gender    : VoiceGenderFemale, VoiceGenderMale
+    # def change_voice(self, engine, language, gender='VoiceGenderFemale'):
+    #     for voice in engine.getProperty('voices'):
+    #         print(voice)
+    #         if language in voice.languages and gender == voice.gender:
+    #             engine.setProperty('voice', voice.id)
+    #             return True
+
+    #     raise RuntimeError("Language '{}' for gender '{}' not found".format(language, gender))
+    
+    # def change_voice(self, engine, language_id):
+    #         engine.setProperty('voice', language_id)
+        
+    # def __text2speech(self, original_sentence, sentence_to_say):
+    #     if 'japanese' in original_sentence:
+    #         self.change_voice(self.speech_engine, self.haruka_jp_id)
+    #     else:
+    #         self.change_voice(self.speech_engine, self.zira_en_id)
+    #     self.speech_engine.say(sentence_to_say)
+    #     self.speech_engine.runAndWait()
+    
+    def gg_tts(self, original_sentence, sentence_to_say):
+        if 'japanese' in original_sentence:
+            # self.change_voice(self.speech_engine, self.haruka_jp_id)
+            call([self.cmd_ja_beg + " " + sentence_to_say], shell=True)
+        else:
+            # self.change_voice(self.speech_engine, self.zira_en_id)
+            call([self.cmd_en_beg + " " + sentence_to_say], shell=True)
 
     def __find_command(self, commandID, text_list):
         if commandID not in self.command_IDs:
