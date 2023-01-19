@@ -14,7 +14,7 @@ def main():
         try:
             user_input = speech2text.listening(recognizer)
             # user_input = input("Enter command: ")
-            if user_input == "stop":
+            if user_input == "stop operation":
                 break
             checker.check_command(user_input)
             # print(checker.commands)
